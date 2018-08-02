@@ -19,6 +19,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {mapState, mapMutations, mapActions} from 'vuex'
 import authToken from '../../util/auth'
 export default {
   data () {
@@ -32,6 +33,7 @@ export default {
   },
   methods: {
     submitForm (formName) {
+      this.login()
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$axios.post(`/apis/v1/logins/`, {
@@ -50,7 +52,10 @@ export default {
           return false
         }
       })
-    }
+    },
+    ...mapActions({
+      login: 'login'
+    })
   }
 }
 </script>

@@ -8,7 +8,14 @@ const state = {
 
 const mutations = {}
 
-const actions = {}
+const actions = {
+  login ({commit}, payload) {
+    return new Promise((resolve) => {
+      console.log(resolve)
+      resolve()
+    })
+  }
+}
 
 export default {
   state,
