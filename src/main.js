@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import store from './store/index'
 import './config/config'
+import './mock' // simulation data
 Vue.use(ElementUI)
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false

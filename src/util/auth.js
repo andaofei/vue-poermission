@@ -7,7 +7,7 @@ const authToken = {
   tokenTimeoutMethod: 'getNewToken',
 
   // 在Cookie中记录登录状态的key
-  loginKey: 'isLogin',
+  loginKey: 'Admin-Token',
 
   // Token是否超时
   hasToken () {
@@ -15,7 +15,7 @@ const authToken = {
   },
 
   // 当前是否是登录状态
-  isLogin: function () {
+  isLogin () {
     // console.log(this.loginKey)
     return Cookies.get(this.loginKey)
   },
@@ -23,12 +23,14 @@ const authToken = {
   // 设置Token
   setToken (token) {
     // TODO: 设置token，并填写有效期
-    let maxAge = new Date(new Date().getTime() + 30 * 1000)
-    Cookies.set('token', token, {
+    let maxAge = new Date(new Date().getTime() + 30 * 1000 * 60)
+    Cookies.set(this.loginKey, token, {
       expires: maxAge
     })
   },
-
+  getToken () {
+    return Cookies.get(this.loginKey)
+  },
   // 设置登录状态
   setLoginStatus () {
     // TODO: 设置超时登录时间，在该时间范围内没有任何请求操作则自动删除
@@ -41,7 +43,7 @@ const authToken = {
 
   // 移除Token
   removeToken () {
-    Cookies.remove('token')
+    Cookies.remove(this.loginKey)
   },
 
   // 移除登录状态
@@ -49,4 +51,5 @@ const authToken = {
     Cookies.remove(this.loginKey)
   }
 }
+
 export default authToken

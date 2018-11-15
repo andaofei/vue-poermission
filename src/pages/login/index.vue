@@ -38,16 +38,28 @@ export default {
       ruleForm: {
         name: 'admin',
         pass: '123456'
-      }
+      },
+      redirect: undefined
     }
+  },
+    watch: {
+    $route: {
+      handler: function(route) {
+        console.log(route)
+        this.redirect = route.query && route.query.redirect
+      },
+      immediate: true
+    }
+
   },
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.login({username: this.ruleForm.name, password: this.ruleForm.pass})
-            .then((res) => {
-              console.log(res)
+            .then(() => {
+              console.log(this.redirect)
+             this.$router.push({ path: this.redirect || '/' })
             })
             .catch((err) => {
               console.log(err)
@@ -69,7 +81,6 @@ export default {
       },
       immediate: true
     }
-
   }
 }
 </script>

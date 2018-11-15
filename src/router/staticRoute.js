@@ -21,10 +21,10 @@ const Mange = (resolve) => {
     resolve(module)
   })
 }
-const staticRoute = [
+const constantRouterMap = [
   {
     path: '/',
-    redirect: '/login'
+    redirect: '/home'
   },
   {
     path: '/login',
@@ -47,4 +47,4 @@ const staticRoute = [
     component: Mange
   }
 ]
-export default staticRoute
+export default constantRouterMap
