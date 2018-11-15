@@ -10,18 +10,18 @@ const authToken = {
   loginKey: 'isLogin',
 
   // Token是否超时
-  hasToken(){
+  hasToken () {
     return Cookies.get('token')
   },
 
   // 当前是否是登录状态
-  isLogin: function(){
+  isLogin: function () {
     // console.log(this.loginKey)
     return Cookies.get(this.loginKey)
   },
 
   // 设置Token
-  setToken(token){
+  setToken (token) {
     // TODO: 设置token，并填写有效期
     let maxAge = new Date(new Date().getTime() + 30 * 1000)
     Cookies.set('token', token, {
@@ -30,9 +30,9 @@ const authToken = {
   },
 
   // 设置登录状态
-  setLoginStatus(){
+  setLoginStatus () {
     // TODO: 设置超时登录时间，在该时间范围内没有任何请求操作则自动删除
-    console.log("登录状态最长时间更新")
+    console.log('登录状态最长时间更新')
     let maxAge = new Date(new Date().getTime() + 30 * 60 * 1000)
     Cookies.set(this.loginKey, 'true', {
       expires: maxAge
@@ -40,12 +40,12 @@ const authToken = {
   },
 
   // 移除Token
-  removeToken(){
+  removeToken () {
     Cookies.remove('token')
   },
 
   // 移除登录状态
-  removeLoginStatus(){
+  removeLoginStatus () {
     Cookies.remove(this.loginKey)
   }
 }
