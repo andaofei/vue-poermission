@@ -69,7 +69,7 @@ router.beforeEach((to, from, next) => {
   NProgress.start()
   // console.log(Auth.isLogin())
   // if (Auth.isLogin()) {
-  console.log(to.path, 'to path')
+  // console.log(to.path, 'to path')
   if (store.getters.token) {
     if (to.path === '/login') {
       next({ path: '/' })
@@ -97,16 +97,18 @@ router.beforeEach((to, from, next) => {
   } else {
     NProgress.done()
     // 如果是免登陆的页面则直接进入，否则跳转到登录页面
-    if (whiteList.indexOf(to.path) >= 0) {
+    if (whiteList.indexOf(to.path) !== -1) {
       console.log('该页面无需登录即可访问')
       next()
     } else {
       console.warn('当前未处于登录状态，请登录')
       NProgress.done()
-      next({
-        path: '/login',
-        replace: true
-      })
+      next(`/login?redirect=${to.path}`) // 否则全部重定向到登录页
+      NProgress.done()
+      // next({
+      //   path: '/login',
+      //   replace: true
+      // })
     }
   }
 })

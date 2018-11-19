@@ -18,12 +18,19 @@
             style="width: 100%"
             type="primary"
             @click="submitForm('ruleForm');"
-            >登陆</el-button
+          >{{ $t('login.logIn') }}
+          </el-button
           >
         </el-form-item>
       </el-form>
 
-      <router-link to="/register">注册</router-link>
+      <div>
+        <el-radio-group v-model="lang" size="small">
+          <el-radio label="zh" border>简体中文</el-radio>
+          <el-radio label="en" border>English</el-radio>
+          <el-radio label="es" border>Español</el-radio>
+        </el-radio-group>
+      </div>
     </div>
   </div>
 </template>
@@ -42,10 +49,10 @@ export default {
       redirect: undefined
     }
   },
-    watch: {
+  watch: {
     $route: {
-      handler: function(route) {
-        console.log(route)
+      handler: function (route) {
+        // console.log(route)
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -58,8 +65,8 @@ export default {
         if (valid) {
           this.login({username: this.ruleForm.name, password: this.ruleForm.pass})
             .then(() => {
-              console.log(this.redirect)
-             this.$router.push({ path: this.redirect || '/' })
+              console.log(this.redirect, 'this.redirect')
+              this.$router.push({path: this.redirect || '/'})
             })
             .catch((err) => {
               console.log(err)
@@ -73,22 +80,24 @@ export default {
       login: 'login'
     })
   },
-  watch: {
-    $route: {
-      handler: function(route) {
-        console.log(route)
-        // this.redirect = route.query && route.query.redirect
+  computed: {
+    lang: {
+      get () {
+        return this.$store.state.lang.language
       },
-      immediate: true
+      set (lang) {
+        this.$i18n.locale = lang
+        this.$store.dispatch('setLanguage', lang)
+      }
     }
   }
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
-.box
-  .wrapper
-    padding-top 5%
-    width 50%
-    text-align center
-    margin 0 auto
+  .box
+    .wrapper
+      padding-top 5%
+      width 50%
+      text-align center
+      margin 0 auto
 </style>

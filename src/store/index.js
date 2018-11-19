@@ -4,6 +4,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import user from './module/auth'
+import lang from './module/lang'
 import permission from './module/permission'
 import createLogger from 'vuex/dist/logger'//    调试
 import process from 'process'
@@ -15,6 +16,7 @@ export default new Vuex.Store({
   plugins: debug ? [createLogger()] : [],
   modules: {
     user,
+    lang,
     permission
   },
   getters
