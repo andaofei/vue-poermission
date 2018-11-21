@@ -32,14 +32,14 @@ export function parseTime(time, cFormat) {
     }
     return value || 0
   })
+
   return time_str
 }
 
-export function formatTime(time, option) {
+export function formatTime (time, option) {
   time = +time * 1000
   const d = new Date(time)
   const now = Date.now()
-
   const diff = (now - d) / 1000
 
   if (diff < 30) {

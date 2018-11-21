@@ -93,7 +93,7 @@ export default {
       console.log(key, keyPath)
     },
     logout () {
-      this.$store.dispatch('LogOut')
+      this.$store.dispatch('FedLogOut')
         .then(() => {
           location.reload() // In order to re-instantiate the vue-router object to avoid bugs
         })

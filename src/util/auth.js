@@ -24,6 +24,7 @@ const authToken = {
   setToken (token) {
     // TODO: 设置token，并填写有效期
     let maxAge = new Date(new Date().getTime() + 30 * 1000 * 60)
+
     Cookies.set(this.loginKey, token, {
       expires: maxAge
     })
@@ -35,7 +36,9 @@ const authToken = {
   setLoginStatus () {
     // TODO: 设置超时登录时间，在该时间范围内没有任何请求操作则自动删除
     console.log('登录状态最长时间更新')
+
     let maxAge = new Date(new Date().getTime() + 30 * 60 * 1000)
+
     Cookies.set(this.loginKey, 'true', {
       expires: maxAge
     })
@@ -51,5 +54,4 @@ const authToken = {
     Cookies.remove(this.loginKey)
   }
 }
-
 export default authToken

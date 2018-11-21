@@ -6,10 +6,10 @@ import axios from 'axios'
 //   getToken,
 //   setToken
 // } from '@/utils/auth'
-import Auth from '@/util/auth'
+import {removeToken, getToken, setToken} from '@/utils/auth'
 import { loginByUsername, getUserInfo } from '@/api/login'
 const state = {
-  token: Auth.getToken(),
+  token: getToken(),
   roles: [],
   avatar: '',
   introduction: '',
@@ -43,14 +43,14 @@ const mutations = {
 }
 
 const actions = {
-  login({ commit }, userInfo) {
+  login ({ commit }, userInfo) {
     const username = userInfo.username.trim()
     return new Promise((resolve, reject) => {
       loginByUsername(username, userInfo.password).then(response => {
         const data = response.data
         console.log(data)
         commit('SET_TOKEN', data.token)
-        Auth.setToken(response.data.token)
+        setToken(response.data.token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -73,7 +73,7 @@ const actions = {
   //     })
   // },
   // 获取用户信息
-  GetUserInfo({
+  GetUserInfo ({
     commit,
     state
   }) {
@@ -100,12 +100,20 @@ const actions = {
     })
   },
 
-  LogOut({
+  LogOut ({
     commit,
     state
   }) {
-    Auth.removeToken()
+    removeToken()
     commit('SET_TOKEN', '')
+  },
+  // 前端 登出
+  FedLogOut ({ commit }) {
+    return new Promise(resolve => {
+      commit('SET_TOKEN', '')
+      removeToken()
+      resolve()
+    })
   }
 }
 

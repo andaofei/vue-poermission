@@ -1,4 +1,7 @@
 export default {
+  validate: {
+    length: 'The password can not be less than 6 digits'
+  },
   route: {
     dashboard: 'Dashboard',
     introduction: 'Introduction',

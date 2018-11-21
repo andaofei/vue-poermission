@@ -1,4 +1,7 @@
 export default {
+  validate: {
+    length: '密码长度不能少于6'
+  },
   route: {
     dashboard: '首页',
     introduction: '简述',
