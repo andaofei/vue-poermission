@@ -196,8 +196,8 @@ export default {
     justify-content: space-between;
       .login-form {
         /*position: absolute;*/
-        left: 0;
-        right: 0;
+        /*left: 0;*/
+        /*right: 0;*/
         width: 520px;
         max-width: 100%;
         padding: 35px 35px 15px 35px;
