@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css'// progress bar style
+import '@/commom/nprogress/nprogress.css'// progress bar style
 // import constantRouterMap from './staticRoute'
 import whiteList from './whiteList'
 import store from '@/store'

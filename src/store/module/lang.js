@@ -47,7 +47,7 @@ const lang = {
     toggleDevice ({ commit }, device) {
       commit('TOGGLE_DEVICE', device)
     },
-    setLanguage ({ commit }, language) {
+    setLanguage ({ commit }, language) { // 设置语言
       commit('SET_LANGUAGE', language)
     },
     setSize ({ commit }, size) {
