@@ -1,7 +1,7 @@
 /**
  * Created by 23535 on 2018/8/1.
  */
-import axios from 'axios'
+// import axios from 'axios'
 // import {
 //   getToken,
 //   setToken
@@ -83,7 +83,7 @@ const actions = {
           reject('error')
         }
         const data = response.data
-        console.log(data)
+        // console.log(data)
         if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
           commit('SET_ROLES', data.roles)
         } else {

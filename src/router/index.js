@@ -18,52 +18,88 @@ const Login = (resolve) => {
     resolve(module)
   })
 }
-const Home = (resolve) => {
-    import('@/pages/home/index').then((module) => {
-      resolve(module)
-    })
-}
-const Register = (resolve) => {
-    import('@/pages/register/index').then((module) => {
-      resolve(module)
-    })
-}
-const Mange = (resolve) => {
-    import('@/pages/manage/index').then((module) => {
-      resolve(module)
-    })
+const Layout = (resolve) => {
+  import('@/pages/home/index').then((module) => {
+    resolve(module)
+  })
 }
 export const constantRouterMap = [
+  // {
+  //   path: '/',
+  //   redirect: '/home'
+  // },
   {
-    path: '/',
-    redirect: '/home'
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import('@/pages/redirect/index')
+      }
+    ]
   },
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: Login,
+    hidden: true
   },
   {
-    path: '/home',
-    name: 'home',
-    component: Home
+    path: '/auth-redirect',
+    component: () => import('@/pages/login/authredirect'),
+    hidden: true
   },
   {
-    path: '/register',
-    name: 'register',
-    component: Register
+    path: '',
+    component: Layout,
+    redirect: 'dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/pages/dashboard/index'),
+        name: 'Dashboard',
+        meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
+      }
+    ]
   },
   {
-    path: '/mange',
-    name: 'mange',
-    component: Mange
+    path: '/documentation',
+    component: Layout,
+    redirect: '/documentation/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/pages/documentation/index'),
+        name: 'Documentation',
+        meta: { title: 'documentation', icon: 'documentation', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/guide',
+    component: Layout,
+    redirect: '/guide/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/pages/guide/index'),
+        name: 'Guide',
+        meta: { title: 'guide', icon: 'guide', noCache: true }
+      }
+    ]
   }
 ]
 const router = new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
-
+// permission judge function
+function hasPermission (roles, permissionRoles) {
+  if (roles.indexOf('admin') >= 0) return true // admin permission passed directly
+  if (!permissionRoles) return true
+  return roles.some(role => permissionRoles.indexOf(role) >= 0)
+}
 // 路由跳转前验证
 router.beforeEach((to, from, next) => {
   NProgress.start()
@@ -92,7 +128,12 @@ router.beforeEach((to, from, next) => {
           })
         })
       } else {
-        next() // 当有用户权限的时候，说明所有可访问路由已生成 如访问没权限的全面会自动进入404页面
+        // 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓
+        if (hasPermission(store.getters.roles, to.meta.roles)) {
+          next()
+        } else {
+          next({ path: '/401', replace: true, query: { noGoBack: true }})
+        }
       }
     }
   } else {
@@ -116,5 +157,31 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
   NProgress.done() // finish progress bar
 })
-export const asyncRouterMap = []
 export default router
+export const asyncRouterMap = [
+  {
+    path: '/error',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'ErrorPages',
+    meta: {
+      title: 'errorPages',
+      icon: '404'
+    },
+    children: [
+      {
+        path: '401',
+        component: () => import('@/pages/errorPage/401'),
+        name: 'Page401',
+        meta: { title: 'page401', noCache: true }
+      },
+      {
+        path: '404',
+        component: () => import('@/pages/errorPage/404'),
+        name: 'Page404',
+        meta: { title: 'page404', noCache: true }
+      }
+    ]
+  },
+  { path: '*', redirect: '/404', hidden: true }
+]

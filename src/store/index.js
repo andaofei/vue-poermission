@@ -6,6 +6,7 @@ import Vuex from 'vuex'
 import user from './module/auth'
 import lang from './module/lang'
 import permission from './module/permission'
+import tagsView from './module/tagsView'
 import createLogger from 'vuex/dist/logger'//    调试
 import process from 'process'
 import getters from './getters'
@@ -17,7 +18,8 @@ export default new Vuex.Store({
   modules: {
     user,
     lang,
-    permission
+    permission,
+    tagsView
   },
   getters
 })

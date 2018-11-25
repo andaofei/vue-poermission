@@ -11,6 +11,7 @@ import VueLazyload from 'vue-lazyload'
 import './config/config'
 import './icons'
 import i18n from './lang'
+import '@/styles/index.scss' // global css
 import './mock' // simulation data
 import './commom/element-color/element-variables.scss' // 自定义颜色
 import './commom/scss/index.scss'

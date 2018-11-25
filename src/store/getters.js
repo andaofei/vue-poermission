@@ -1,7 +1,19 @@
 const getters = {
-  roles: state => state.user.roles, // 角色
-  token: state => state.user.token, // token
-  addRouters: state => state.permission.addRouters, //动态路由
-  language: state => state.lang.language // 国际化语言
+  avatar: state => state.user.avatar,
+  name: state => state.user.name,
+  introduction: state => state.user.introduction,
+  status: state => state.user.status,
+  setting: state => state.user.setting,
+  roles: state => state.user.roles,
+  token: state => state.user.token, // user token
+  addRouters: state => state.permission.addRouters, // asyncRouterMap
+  permission_routers: state => state.permission.routers, // new router
+  language: state => state.lang.language, // lang
+  sidebar: state => state.lang.sidebar,
+  // new
+  size: state => state.lang.size,
+  device: state => state.lang.device,
+  visitedViews: state => state.tagsView.visitedViews,
+  cachedViews: state => state.tagsView.cachedViews
 }
 export default getters
